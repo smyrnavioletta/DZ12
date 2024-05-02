@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 02</title>
+    <style>
+        .form-group {
+            margin: 4px;
+        }
+
+        .form-group label {
+            width: 75px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label>Логін</label>
+            <input type="text" name="login" required minlength="4">
+        </div>
+        <div class="form-group">
+            <label>Пароль</label>
+            <input type="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}">
+            <!-- Пароль має містити хоча б одну цифру, одну букву у нижньому регістрі, одну букву у верхньому регістрі, один спеціальний символ (!@#$%^&*), і бути не менш як 6 символів -->
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Зареєструватися">
+        </div>
+    </form>
+    
+    <script>
+        const registrationForm = document.getElementById('registrationForm');
+
+        registrationForm.addEventListener('submit', function(event) {
+            if (!registrationForm.checkValidity()) {
+                event.preventDefault(); // Відміна стандартної відправки форми, якщо валідація не пройшла успішно
+                alert('Будь ласка, перевірте правильність введених даних.');
+            }
+        });
+    </script>
+</body>
+
+</html>

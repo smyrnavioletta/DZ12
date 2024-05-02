@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 05</title>
+    <style>
+      .form-group {
+        margin: 10px 4px;
+      }
+      .form-group label {
+        display: block;
+      }
+      .error {
+        color: red;
+        display: none;
+      }
+      .invalid {
+        border: red 1px solid;
+      }
+      .valid {
+        border: green 1px solid;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="text"
+          name="email"
+          data-val="true"
+          data-required="Введіть Email"
+          data-pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+          data-error-label="emailErrorLabel"
+        />
+        <span class="error" id="emailErrorLabel">Помилка</span>
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input
+          type="password"
+          name="password"
+          data-val="true"
+          data-required="Введіть пароль"
+          id="password"
+          data-error-label="passwordErrorLabel"
+        />
+        <span class="error" id="passwordErrorLabel">Помилка</span>
+      </div>
+      <div class="form-group">
+        <label>Підтвердження пароля</label>
+        <input
+          type="password"
+          name="passwordConfirm"
+          id="passwordConfirm"
+          data-val="true"
+          data-required="Підтвердьте пароль"
+          data-confirm="password"
+          data-error-label="passwordConfirmErrorLabel"
+        />
+        <span class="error" id="passwordConfirmErrorLabel">Помилка</span>
+      </div>
+      <div class="form-group">
+        <label>Номер кредитної картки</label>
+        <input type="text" name="creditCard" data-val="true" data-required="Введіть номер кредитної картки"
+    data-pattern="^(\d{4} \d{4} \d{4} \d{4})$" data-error-label="creditCardErrorLabel">
+<span class="error" id="creditCardErrorLabel">Помилка</span>
+
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Реєстрація" />
+      </div>
+    </form>
+
+    <script>
+     document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('registrationForm');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Запобігаємо стандартній відправці форми
+        let isValid = true;
+        const inputs = this.querySelectorAll('[data-val="true"]');
+        inputs.forEach(input => {
+            if (!validateInput(input)) {
+                isValid = false;
+            }
+        });
+
+        if (isValid) {
+            console.log('Form is valid and can be submitted.'); // Тут можна замінити на this.submit(); для реальної відправки форми
+        }
+    });
+
+    function validateInput(input) {
+        const pattern = new RegExp(input.dataset.pattern);
+        const errorLabel = document.getElementById(input.dataset.errorLabel);
+        errorLabel.style.display = 'none'; // Приховуємо повідомлення про помилку на початку
+        input.classList.remove('invalid', 'valid');
+
+        if (!pattern.test(input.value)) {
+            showError(input, errorLabel, 'Введене значення не відповідає шаблону');
+            return false;
+        } else {
+            input.classList.add('valid');
+            return true;
+        }
+    }
+
+    function showError(input, errorLabel, message) {
+        errorLabel.textContent = message;
+        errorLabel.style.display = 'block'; // Показуємо повідомлення про помилку
+        input.classList.add('invalid');
+    }
+});
+
+    </script>
+  </body>
+</html>
